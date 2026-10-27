@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ladenzeile.de — Style Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; color: #333; background: #faf8f5; line-height: 1.6; }
+
+  /* Layout */
+  .sg-wrapper { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+  .sg-header { text-align: center; margin-bottom: 56px; padding: 40px 0; border-bottom: 2px solid #e0e0e0; }
+  .sg-header .sg-logo { display:inline-flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .sg-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 40px; color: #14112b; letter-spacing: -0.5px; }
+  .sg-header p { font-size: 16px; color: #666; }
+
+  .sg-toc { background:#fff; border:1px solid #e0e0e0; border-radius:10px; padding:24px 28px; margin-bottom:56px; }
+  .sg-toc h2 { font-family:'Canela Deck','Newsreader',Georgia,serif; font-size:16px; color:#14112b; margin-bottom:14px; text-transform:uppercase; letter-spacing:1px; }
+  .sg-toc ol { list-style:none; display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px 24px; counter-reset:toc; }
+  .sg-toc li { counter-increment:toc; }
+  .sg-toc a { color:#0a00da; text-decoration:none; font-size:14px; font-weight:500; }
+  .sg-toc a::before { content:counter(toc) ". "; color:#999; font-weight:600; }
+  .sg-toc a:hover { text-decoration:underline; }
+
+  .sg-section { margin-bottom: 64px; scroll-margin-top: 20px; }
+  .sg-section-title { font-family:'Canela Deck','Newsreader',Georgia,serif; font-size:28px; color:#14112b; margin-bottom:8px; padding-bottom:12px; border-bottom:3px solid #0a00da; letter-spacing:-0.3px; }
+  .sg-section-desc { font-size:14px; color:#666; margin:16px 0 28px; max-width:720px; }
+  .sg-subsection { margin-bottom:36px; }
+  .sg-subsection-title { font-family:'Canela Deck','Newsreader',Georgia,serif; font-size:19px; color:#14112b; margin-bottom:14px; }
+
+  /* Colors */
+  .sg-colors { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px; }
+  .sg-color-card { background:#fff; border:1px solid #e0e0e0; border-radius:10px; overflow:hidden; }
+  .sg-color-swatch { height:90px; display:flex; align-items:flex-end; justify-content:flex-start; padding:10px 12px; color:#fff; font-size:12px; font-weight:600; }
+  .sg-color-info { padding:12px 14px; }
+  .sg-color-name { font-weight:600; font-size:13px; color:#14112b; margin-bottom:4px; }
+  .sg-color-hex { font-size:12px; color:#666; font-family:'SFMono-Regular',Consolas,monospace; }
+  .sg-color-usage { font-size:11px; color:#888; margin-top:6px; }
+
+  /* Type samples */
+  .sg-type-sample { background:#fff; border:1px solid #e0e0e0; border-radius:10px; padding:24px; margin-bottom:14px; }
+  .sg-type-label { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#999; margin-bottom:10px; }
+  .sg-type-meta { font-size:12px; color:#888; margin-top:10px; font-family:monospace; }
+
+  /* Preview boxes */
+  .sg-preview { background:#fff; border:1px solid #e0e0e0; border-radius:10px; overflow:hidden; margin-bottom:16px; }
+  .sg-preview-header { background:#faf8f5; border-bottom:1px solid #e0e0e0; padding:8px 14px; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#888; }
+  .sg-preview-body { padding:24px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+  .sg-preview-body--dark { background:#14112b; }
+
+  /* Code */
+  .sg-code { background:#14112b; color:#e6e6e6; border-radius:8px; padding:14px 16px; font-family:'SFMono-Regular',Consolas,monospace; font-size:12.5px; line-height:1.7; overflow-x:auto; white-space:pre; }
+  .sg-code .tok { color:#0a00da; }
+
+  /* Tables */
+  .sg-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #e0e0e0; border-radius:10px; overflow:hidden; font-size:13.5px; }
+  .sg-table th, .sg-table td { text-align:left; padding:10px 14px; border-bottom:1px solid #eee; }
+  .sg-table th { background:#faf8f5; font-weight:600; color:#14112b; }
+  .sg-table tr:last-child td { border-bottom:0; }
+  .sg-table code { font-family:monospace; font-size:12.5px; color:#0a00da; background:#efeefc; padding:1px 6px; border-radius:4px; }
+
+  /* Spacing */
+  .sg-spacing-item { display:flex; align-items:center; gap:16px; margin-bottom:10px; }
+  .sg-spacing-bar { background:#0a00da; height:18px; border-radius:3px; }
+  .sg-spacing-item .label { font-family:monospace; font-size:12px; color:#666; width:120px; }
+
+  /* Live component demo styles (mirrors production tokens) */
+  .demo-btn { font-family:'Segoe UI','Inter',system-ui,sans-serif; font-size:13px; font-weight:600; border-radius:5px; padding:8px 18px; cursor:pointer; display:inline-block; text-align:center; border:1px solid #14112b; background:#fff; color:#14112b; text-decoration:none; }
+  .demo-btn.primary { background:#0a00da; border-color:#0a00da; color:#fff; }
+  .demo-btn.primary:hover { background:#0800a8; border-color:#0800a8; }
+  .demo-btn.secondary { background:#14112b; border-color:#14112b; color:#fff; }
+  .demo-tag { display:inline-block; background:#14112b; font-size:12px; font-weight:500; color:#fff; border-radius:12px; padding:3px 10px; }
+  .demo-badge { border-radius:5px; padding:1px 8px; color:#fff; background:#14112b; font-size:12px; }
+  .demo-badge.deal { background:#cf2a3c; }
+  .demo-search { display:flex; height:44px; background:#fff; border-radius:6px; overflow:hidden; box-shadow:0 2px 10px rgba(20,17,43,.12); max-width:480px; width:100%; }
+  .demo-search input { border:0; flex-grow:1; padding:0 14px; font-size:15px; color:#000; outline:none; }
+  .demo-search input::placeholder { color:#b8b8b8; }
+  .demo-search button { border:0; background:#0a00da; color:#fff; font-weight:600; padding:0 22px; cursor:pointer; }
+  .demo-price { font-family:'Segoe UI','Inter',system-ui,sans-serif; font-weight:700; color:#14112b; font-size:22px; }
+  .demo-stars { display:inline-block; width:110px; height:20px; vertical-align:middle;
+    background:linear-gradient(90deg,#f2a900 80%,#d6d6d6 80%);
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='20' viewBox='0 0 110 20'%3E%3Cg fill='black'%3E%3Cpath d='M10 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L10 14.9 4.8 17.3l1-5.9L1.5 7.3l5.9-.9z'/%3E%3Cpath d='M32 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L32 14.9l-5.2 2.4 1-5.9-4.3-4.1 5.9-.9z'/%3E%3Cpath d='M54 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L54 14.9l-5.2 2.4 1-5.9-4.3-4.1 5.9-.9z'/%3E%3Cpath d='M76 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L76 14.9l-5.2 2.4 1-5.9-4.3-4.1 5.9-.9z'/%3E%3Cpath d='M98 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L98 14.9l-5.2 2.4 1-5.9-4.3-4.1 5.9-.9z'/%3E%3C/g%3E%3C/svg%3E") no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='20' viewBox='0 0 110 20'%3E%3Cg fill='black'%3E%3Cpath d='M10 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L10 14.9 4.8 17.3l1-5.9L1.5 7.3l5.9-.9z'/%3E%3Cpath d='M32 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L32 14.9l-5.2 2.4 1-5.9-4.3-4.1 5.9-.9z'/%3E%3Cpath d='M54 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L54 14.9l-5.2 2.4 1-5.9-4.3-4.1 5.9-.9z'/%3E%3Cpath d='M76 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L76 14.9l-5.2 2.4 1-5.9-4.3-4.1 5.9-.9z'/%3E%3Cpath d='M98 1l2.6 5.4 5.9.9-4.3 4.1 1 5.9L98 14.9l-5.2 2.4 1-5.9-4.3-4.1 5.9-.9z'/%3E%3C/g%3E%3C/svg%3E") no-repeat; }
+  .demo-breadcrumb { font-size:13px; color:#666; }
+  .demo-breadcrumb a { color:#0a00da; text-decoration:none; }
+  .demo-breadcrumb span { margin:0 8px; color:#ccc; }
+  .demo-card { width:200px; border:1px solid #e0e0e0; border-radius:8px; padding:14px; background:#fff; }
+  .demo-card__img { height:120px; background:#f7f3ee; border-radius:6px; margin-bottom:10px; }
+  .demo-card__title { font-size:14px; font-weight:600; color:#14112b; margin-bottom:6px; line-height:1.3; }
+  .demo-card__shop { font-size:12px; color:#0a00da; margin-bottom:4px; }
+  .sg-icon-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:12px; }
+  .sg-icon-item { background:#fff; border:1px solid #e0e0e0; border-radius:8px; padding:16px; text-align:center; }
+  .sg-icon-item svg { display:block; margin:0 auto 8px; }
+  .sg-icon-item span { font-size:11px; color:#888; }
+  .sg-pages { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+  .sg-page-card { background:#fff; border:1px solid #e0e0e0; border-radius:10px; padding:20px; }
+  .sg-page-card h3 { font-family:'Canela Deck','Newsreader',Georgia,serif; font-size:16px; color:#14112b; margin-bottom:6px; }
+  .sg-page-card p { font-size:13px; color:#666; }
+  .sg-page-card a { color:#0a00da; font-size:13px; font-weight:600; text-decoration:none; }
+  .sg-footer { margin-top:60px; padding-top:24px; border-top:2px solid #e0e0e0; text-align:center; font-size:13px; color:#999; }
+  .demo-btn, .demo-search { border-radius:999px; }
+  .demo-search button { border-radius:0 999px 999px 0; }
+  .sg-section-title, .sg-subsection-title, .sg-header h1, .sg-page-card h3, .sg-toc h2 { font-weight:500; letter-spacing:0; }
+  .demo-price--sale { color:#cf2a3c; }
+  .demo-price__old { font-size:12px; color:#716d82; text-decoration:line-through; font-weight:400; margin-left:6px; }
+  .demo-card__img { background-size:cover; background-position:center; }
+  .demo-logo-tile { width:140px; height:72px; background:#fff; border:1px solid #e8e2db; border-radius:12px; display:flex; align-items:center; justify-content:center; }
+  .demo-logo-tile img { max-width:96px; max-height:34px; }
+  .demo-swatch { display:inline-block; width:14px; height:14px; border-radius:50%; border:1px solid #ccc; vertical-align:middle; margin-right:6px; }
+  .sg-preview-body--cream { background:#f7f3ee; }
+.sg-code .tok{color:#a9a4ff!important}
+</style>
+</head>
+<body>
+<div class="sg-wrapper">
+
+  <header class="sg-header">
+    <div class="sg-logo"><img src="assets/ladenzeile-logo.png" alt="Ladenzeile.de" height="40"></div>
+    <h1>Style Guide</h1>
+    <p>Design system for Ladenzeile.de (international: Shopalike), the full-inventory price comparison · v1.0</p>
+  </header>
+
+  <nav class="sg-toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#colors">Color palette</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#buttons">Buttons</a></li>
+      <li><a href="#forms">Forms</a></li>
+      <li><a href="#spacing">Spacing &amp; layout</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#icons">Icons</a></li>
+      <li><a href="#pages">Page types</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1. COLORS -->
+  <section class="sg-section" id="colors">
+    <h2 class="sg-section-title">1. Color palette</h2>
+    <p class="sg-section-desc">Derived from the existing Ladenzeile/Shopalike assets: the logo blue <code>#0A00DA</code> is the primary color, and a soft paper tone <code>#F7F3EE</code> from the current navbar and footer is the brand surface. Each color has exactly one job: blue is reserved for the brand and actions, prices are ink, free shipping is a muted green, sale is a muted red. The product photos supply the color. The UI stays calm and neutral.</p>
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Primary colors</h3>
+      <div class="sg-colors">
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#0a00da;">Blue</div>
+          <div class="sg-color-info"><div class="sg-color-name">Ladenzeile Blue / Primary</div><div class="sg-color-hex">#0a00da</div><div class="sg-color-usage">Logo, primary CTAs, links, focus states</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#0800a8;">Blue dark</div>
+          <div class="sg-color-info"><div class="sg-color-name">Blue hover</div><div class="sg-color-hex">#0800a8</div><div class="sg-color-usage">:hover state of primary buttons and links</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#efeefc; color:#14112b;">Blue tint</div>
+          <div class="sg-color-info"><div class="sg-color-name">Blue tint</div><div class="sg-color-hex">#efeefc</div><div class="sg-color-usage">Compare-prices buttons in tiles, price badges, selected filters</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Accents</h3>
+      <div class="sg-colors">
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#cf2a3c;">Sale</div>
+          <div class="sg-color-info"><div class="sg-color-name">Sale Red</div><div class="sg-color-hex">#cf2a3c</div><div class="sg-color-usage">Error states and sale labels; Ladenzeile shows no strike prices</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#2c7a57;">Free</div>
+          <div class="sg-color-info"><div class="sg-color-name">Shipping Green</div><div class="sg-color-hex">#2c7a57</div><div class="sg-color-usage">Free shipping ("Kostenloser Versand") only</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#f2a900;">Stars</div>
+          <div class="sg-color-info"><div class="sg-color-name">Rating Amber</div><div class="sg-color-hex">#f2a900</div><div class="sg-color-usage">Star ratings, review histogram</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Neutrals &amp; surfaces</h3>
+      <div class="sg-colors">
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#f7f3ee; color:#14112b;">Paper</div>
+          <div class="sg-color-info"><div class="sg-color-name">Paper / Brand surface</div><div class="sg-color-hex">#f7f3ee</div><div class="sg-color-usage">Header, footer, showcase cards, info boxes</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#f3efea; color:#14112b;">Image</div>
+          <div class="sg-color-info"><div class="sg-color-name">Image ground</div><div class="sg-color-hex">#f3efea</div><div class="sg-color-usage">Background behind product images</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#e8e2db; color:#14112b;">Line</div>
+          <div class="sg-color-info"><div class="sg-color-name">Line / Border</div><div class="sg-color-hex">#e8e2db</div><div class="sg-color-usage">Borders, dividers, logo tiles, outline buttons</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#ffffff; color:#14112b; border-bottom:1px solid #e0e0e0;">White</div>
+          <div class="sg-color-info"><div class="sg-color-name">White</div><div class="sg-color-hex">#ffffff</div><div class="sg-color-usage">Page background, cards, form fields</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Text colors</h3>
+      <div class="sg-colors">
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#14112b;">Aa</div>
+          <div class="sg-color-info"><div class="sg-color-name">Ink / Primary text</div><div class="sg-color-hex">#14112b</div><div class="sg-color-usage">Headings, product names, header text</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#3a3750;">Aa</div>
+          <div class="sg-color-info"><div class="sg-color-name">Body text</div><div class="sg-color-hex">#3a3750</div><div class="sg-color-usage">Paragraphs, descriptions</div></div>
+        </div>
+        <div class="sg-color-card">
+          <div class="sg-color-swatch" style="background:#716d82;">Aa</div>
+          <div class="sg-color-info"><div class="sg-color-name">Secondary text</div><div class="sg-color-hex">#716d82</div><div class="sg-color-usage">Shop names, shipping costs, breadcrumbs</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. TYPOGRAPHY -->
+  <section class="sg-section" id="typography">
+    <h2 class="sg-section-title">2. Typography</h2>
+    <p class="sg-section-desc">Taken from the current Ladenzeile pages. <strong>Canela Deck</strong> (medium) is used for headlines and gives the brand its editorial, fashion-magazine tone. <strong>Segoe UI</strong> is used for interface and body text. Canela is a licensed font. In the prototype, <strong>Newsreader</strong> (Google Fonts) is the fallback, and <strong>Inter</strong> stands in for Segoe UI on non-Windows systems.</p>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Headlines: Canela Deck</h3>
+      <div class="sg-type-sample">
+        <div class="sg-type-label">Hero · H1</div>
+        <div style="font-family:'Canela Deck','Newsreader',Georgia,serif; font-weight:500; color:#14112b; font-size:44px; line-height:1.15;">Alles finden. Besser shoppen.</div>
+        <div class="sg-type-meta">font-family: 'Canela Deck', 'Newsreader', Georgia, serif; font-weight: 500; font-size: 3.4em</div>
+      </div>
+      <div class="sg-type-sample">
+        <div class="sg-type-label">H1 · Product title / results title</div>
+        <div style="font-family:'Canela Deck','Newsreader',Georgia,serif; font-weight:500; color:#14112b; font-size:28px;">Nike Air Force 1 '07 Herren Sneaker weiß</div>
+        <div class="sg-type-meta">font-weight: 500; font-size: 28px; letter-spacing: 0</div>
+      </div>
+      <div class="sg-type-sample">
+        <div class="sg-type-label">H2/H3 · Section title</div>
+        <div style="font-family:'Canela Deck','Newsreader',Georgia,serif; font-weight:500; color:#14112b; font-size:26px;">Beliebte Marken &amp; Shops</div>
+        <div class="sg-type-meta">font-weight: 500; font-size: 26px</div>
+      </div>
+      <div class="sg-type-sample">
+        <div class="sg-type-label">H4 · Card title (showcase)</div>
+        <div style="font-family:'Canela Deck','Newsreader',Georgia,serif; font-weight:500; color:#14112b; font-size:15px;">Samtsofa 3-Sitzer smaragdgrün</div>
+        <div class="sg-type-meta">font-weight: 500; font-size: 15px</div>
+      </div>
+    </div>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Body text: Segoe UI</h3>
+      <div class="sg-type-sample">
+        <div class="sg-type-label">Paragraph · 14 px</div>
+        <div style="font-family:'Segoe UI','Inter',system-ui,sans-serif; font-size:14px; color:#3a3750;">Ladenzeile.de durchsucht das Sortiment tausender Shops für dich. Ob Sneaker, Sofa oder Smartphone: Du findest Millionen Produkte und vergleichst sie auf einen Blick.</div>
+        <div class="sg-type-meta">font-family: 'Segoe UI', 'Inter', system-ui, sans-serif; font-size: 14px; line-height: 1.6</div>
+      </div>
+      <div class="sg-type-sample">
+        <div class="sg-type-label">Price · 22 px bold</div>
+        <div style="font-family:'Segoe UI','Inter',system-ui,sans-serif; font-size:22px; font-weight:700; color:#14112b;">99,99&nbsp;€</div>
+        <div class="sg-type-meta">font-weight: 700; color: #14112b (sale: #cf2a3c)</div>
+      </div>
+      <div class="sg-type-sample">
+        <div class="sg-type-label">Metadata · 12–13 px</div>
+        <div style="font-family:'Segoe UI','Inter',system-ui,sans-serif; font-size:13px; color:#716d82;">ab Zalando · Kostenloser Versand · 1-3 Werktage</div>
+        <div class="sg-type-meta">font-size: 13px; color: #716d82</div>
+      </div>
+    </div>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Font integration (prototype)</h3>
+      <div class="sg-code">&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?<span class="tok">family=Inter:wght@400;500;600;700</span>&amp;<span class="tok">family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600</span>&amp;display=swap"&gt;
+font-family: <span class="tok">'Canela Deck'</span>, 'Newsreader', Georgia, serif;   /* headlines */
+font-family: <span class="tok">'Segoe UI'</span>, 'Inter', system-ui, sans-serif;   /* UI &amp; body */</div>
+    </div>
+  </section>
+
+  <!-- 3. BUTTONS -->
+  <section class="sg-section" id="buttons">
+    <h2 class="sg-section-title">3. Buttons</h2>
+    <p class="sg-section-desc">All buttons are pill-shaped (<code>border-radius: 999px</code>). The primary button is Ladenzeile blue, and its hover darkens to <code>#0800a8</code>. The outline button is used for secondary actions such as "Zum Shop" in the showcases and in the offer list.</p>
+    <div class="sg-preview">
+      <div class="sg-preview-header">Variants</div>
+      <div class="sg-preview-body">
+        <a class="demo-btn primary" href="#buttons">14 Preise vergleichen</a>
+        <a class="demo-btn primary" href="#buttons">Zum Shop</a>
+        <a class="demo-btn secondary" href="#buttons">Übernehmen</a>
+        <a class="demo-btn" href="#buttons">Zum Shop</a>
+      </div>
+    </div>
+    <table class="sg-table">
+      <tr><th>Variant</th><th>Background</th><th>Text</th><th>Hover</th><th>Use</th></tr>
+      <tr><td>Primary</td><td><code>#0a00da</code></td><td><code>#fff</code></td><td><code>#0800a8</code></td><td>Search, Preise vergleichen (showcase), best-offer Zum Shop</td></tr>
+      <tr><td>Soft</td><td><code>#eeedfb</code></td><td><code>#0a00da</code></td><td>bg <code>#0a00da</code>, text <code>#fff</code></td><td>Preise vergleichen in result tiles (keeps the grid calm)</td></tr>
+      <tr><td>Secondary</td><td><code>#14112b</code></td><td><code>#fff</code></td><td>—</td><td>Filter actions, active toggle</td></tr>
+      <tr><td>Outline (default)</td><td><code>#fff</code></td><td><code>#14112b</code></td><td>border <code>#e8e2db</code> → <code>#14112b</code></td><td>Zum Shop in showcases, tiles and the offer list</td></tr>
+    </table>
+  </section>
+
+  <!-- 4. FORMS -->
+  <section class="sg-section" id="forms">
+    <h2 class="sg-section-title">4. Forms</h2>
+    <p class="sg-section-desc">The search is the central entry point for the full inventory. It is a pill-shaped field with a blue button, shown large in the hero and compact in the header of the subpages.</p>
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Search</h3>
+      <div class="sg-preview">
+        <div class="sg-preview-header">.search-form</div>
+        <div class="sg-preview-body">
+          <div class="demo-search"><input type="text" placeholder="Wonach suchst du? z. B. Sneaker, Sofa, Kopfhörer"><button type="button">Preise vergleichen</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Offer filter &amp; color filter (sidebar)</h3>
+      <div class="sg-preview">
+        <div class="sg-preview-header">.offer-condition · .lz-swatch</div>
+        <div class="sg-preview-body">
+          <span class="demo-btn secondary">Alle</span>
+          <span class="demo-btn">Nur Sale %</span>
+          <span style="font-size:14px;margin-left:24px;"><i class="demo-swatch" style="background:#fff"></i>Weiß &nbsp; <i class="demo-swatch" style="background:#14112b"></i>Schwarz &nbsp; <i class="demo-swatch" style="background:#cf2a3c"></i>Rot &nbsp; <i class="demo-swatch" style="background:#e3cfb4"></i>Beige</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SPACING -->
+  <section class="sg-section" id="spacing">
+    <h2 class="sg-section-title">5. Spacing &amp; layout</h2>
+    <p class="sg-section-desc">Centered container (max. 1200 px). Spacing is based on multiples of 4/8 px. Radii: 999 px for buttons and search, 12 px for tiles and cards.</p>
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Spacing scale</h3>
+      <div class="sg-spacing-item"><span class="label">4 px · xs</span><span class="sg-spacing-bar" style="width:4px;"></span></div>
+      <div class="sg-spacing-item"><span class="label">8 px · sm</span><span class="sg-spacing-bar" style="width:8px;"></span></div>
+      <div class="sg-spacing-item"><span class="label">12 px · md</span><span class="sg-spacing-bar" style="width:12px;"></span></div>
+      <div class="sg-spacing-item"><span class="label">16 px · lg</span><span class="sg-spacing-bar" style="width:16px;"></span></div>
+      <div class="sg-spacing-item"><span class="label">24 px · xl</span><span class="sg-spacing-bar" style="width:24px;"></span></div>
+      <div class="sg-spacing-item"><span class="label">40 px · 2xl</span><span class="sg-spacing-bar" style="width:40px;"></span></div>
+      <div class="sg-spacing-item"><span class="label">64 px · 3xl</span><span class="sg-spacing-bar" style="width:64px;"></span></div>
+    </div>
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Responsive breakpoints</h3>
+      <table class="sg-table">
+        <tr><th>Name</th><th>min-width</th><th>Use</th></tr>
+        <tr><td>Mobile</td><td><code>&lt; 480px</code></td><td>Single column</td></tr>
+        <tr><td>Mobile L / Tablet</td><td><code>480–770px</code></td><td>2-column grid</td></tr>
+        <tr><td>Tablet</td><td><code>770px</code></td><td>Sidebar + content</td></tr>
+        <tr><td>Desktop</td><td><code>992px</code></td><td>Full grid (5 tiles per row)</td></tr>
+        <tr><td>Desktop XL</td><td><code>1200px</code></td><td>Max container width</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6. COMPONENTS -->
+  <section class="sg-section" id="components">
+    <h2 class="sg-section-title">6. Components</h2>
+    <p class="sg-section-desc">Reusable blocks as they appear on the home, search and product pages. The mix of brands and retailers in the logo tiles conveys the full-inventory character.</p>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Header (cream)</h3>
+      <div class="sg-preview">
+        <div class="sg-preview-header">.header.header-common</div>
+        <div class="sg-preview-body sg-preview-body--cream">
+          <img src="assets/ladenzeile-logo.png" alt="Ladenzeile.de" height="30">
+          <div class="demo-search" style="max-width:360px;"><input type="text" placeholder="Wonach suchst du?"><button type="button">Suchen</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Brand &amp; shop logo tiles</h3>
+      <div class="sg-preview"><div class="sg-preview-body"><div class="demo-logo-tile"><img src="assets/logos/nike.svg" alt=""></div><div class="demo-logo-tile"><img src="assets/logos/zalando.svg" alt=""></div><div class="demo-logo-tile"><img src="assets/logos/otto.svg" alt=""></div><div class="demo-logo-tile"><img src="assets/logos/adidas.svg" alt=""></div><div class="demo-logo-tile"><img src="assets/logos/aboutyou.svg" alt=""></div><div class="demo-logo-tile"><img src="assets/logos/westwing.svg" alt=""></div></div></div>
+    </div>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Breadcrumb</h3>
+      <div class="sg-preview"><div class="sg-preview-body">
+        <span class="demo-breadcrumb"><a href="#components">Startseite</a><span>›</span><a href="#components">Schuhe</a><span>›</span><a href="#components">Sneaker</a><span>›</span>Nike Air Force 1 '07</span>
+      </div></div>
+    </div>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Tags &amp; badges</h3>
+      <div class="sg-preview"><div class="sg-preview-body">
+        <span class="demo-tag" style="background:none;color:#0a00da;padding:0">#inspiration</span>
+        <span class="demo-badge" style="background:#efeefc;color:#0a00da">Niedrigster Preis</span>
+        <span class="demo-badge" style="background:#efeefc;color:#0a00da">Bester Gesamtpreis</span>
+      </div></div>
+    </div>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Price &amp; rating</h3>
+      <div class="sg-preview"><div class="sg-preview-body">
+        <span class="demo-price">99,99&nbsp;€</span>
+        <span class="demo-price">79,95&nbsp;€</span>
+        <span class="demo-stars" title="4,7 von 5"></span>
+        <span style="font-size:14px;color:#716d82;">4,7 (3)</span>
+      </div></div>
+    </div>
+
+    <div class="sg-subsection">
+      <h3 class="sg-subsection-title">Product tiles</h3>
+      <div class="sg-preview"><div class="sg-preview-body">
+        <div class="demo-card">
+          <div class="demo-card__img" style="background-image:url(assets/img/af1-white.webp)"></div>
+          <div class="demo-card__title">Nike Air Force 1 '07 Herren Sneaker weiß</div>
+          <span class="demo-price" style="font-size:18px;">99,99&nbsp;€</span>
+          <div class="demo-card__shop" style="color:#716d82;margin-top:4px;">ab Zalando</div>
+          <div class="demo-card__shop" style="color:#2c7a57;">Kostenloser Versand</div>
+          <div style="margin-top:14px;"><a class="demo-btn" style="background:#eeedfb;color:#0a00da;width:100%;" href="#components">14 Preise vergleichen</a></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-card__img" style="background-image:url(assets/img/sofa-green.webp)"></div>
+          <div class="demo-card__title">Samtsofa 3-Sitzer smaragdgrün</div>
+          <span class="demo-price" style="font-size:18px;">899,00&nbsp;€</span>
+          <div class="demo-card__shop" style="color:#716d82;margin-top:4px;">Westwing</div>
+          <div class="demo-card__shop" style="color:#2c7a57;">Kostenloser Versand</div>
+          <div style="margin-top:14px;"><a class="demo-btn" style="background:#fff;color:#14112b;border:1px solid #e8e2db;width:100%;" href="#components">Zum Shop</a></div>
+        </div>
+      </div></div>
+      <table class="sg-table" style="margin-top:12px;">
+        <tr><th>Tile type</th><th>CTA</th><th>Shop line</th></tr>
+        <tr><td>Cluster (<code>.offer-cluster</code>)</td><td>"N Preise vergleichen" → product page</td><td>"ab Shop"</td></tr>
+        <tr><td>Single offer (<code>.offer-item</code>)</td><td>"Zum Shop" → leadout</td><td>Shop name</td></tr>
+        <tr><td>Prices (both types)</td><td colspan="2">No strike prices: Ladenzeile has no reference prices, so tiles show no <code>.price__old</code> and no discount badge</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7. ICONS -->
+  <section class="sg-section" id="icons">
+    <h2 class="sg-section-title">7. Icons</h2>
+    <p class="sg-section-desc">Line icons (Lucide style), <code>2px</code> stroke, in Ladenzeile blue <code>#0a00da</code> on light surfaces or white on dark ones.</p>
+    <div class="sg-icon-grid">
+      <div class="sg-icon-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a00da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span></div>
+      <div class="sg-icon-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a00da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Store</span></div>
+      <div class="sg-icon-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a00da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg><span>Categories</span></div>
+      <div class="sg-icon-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a00da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><span>Verified</span></div>
+      <div class="sg-icon-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a00da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg><span>Deal</span></div>
+      <div class="sg-icon-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a00da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg><span>Survey</span></div>
+    </div>
+  </section>
+
+  <!-- 8. PAGE TYPES -->
+  <section class="sg-section" id="pages">
+    <h2 class="sg-section-title">8. Page types</h2>
+    <p class="sg-section-desc">The clickdummy covers three main templates. All of them share the same cream header, category menu (10 full-inventory categories) and footer.</p>
+    <div class="sg-pages">
+      <div class="sg-page-card"><h3>Home</h3><p>Hero with search, trust bar, mixed brand and retailer logo carousels, category showcases (fashion, accessories, living, electronics), most searched items and USP blocks.</p><a href="index.html">index.html →</a></div>
+      <div class="sg-page-card"><h3>Search</h3><p>Filter sidebar (sort, sale, price, category, gender, size, color, brand, shop) and a results grid mixing clusters and single offers, with sale badges and pagination.</p><a href="search.html">search.html →</a></div>
+      <div class="sg-page-card"><h3>Product</h3><p>Title with rating, offer list per shop with shop logos, ratings and payment methods, a spec sheet, product info, similar products and reviews.</p><a href="product.html">product.html →</a></div>
+    </div>
+  </section>
+
+  <footer class="sg-footer">
+    Ladenzeile.de / Shopalike · Style Guide · Ladenzeile GmbH, Zimmerstraße 50, 10888 Berlin · Ein Unternehmen der Axel Springer SE
+  </footer>
+
+</div>
+</body>
+</html>
